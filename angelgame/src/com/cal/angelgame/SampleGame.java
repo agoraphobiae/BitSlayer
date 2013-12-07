@@ -22,6 +22,7 @@ public class SampleGame implements ApplicationListener {
    Texture bucketImage;
    Sound dropSound;
    Music rainMusic;
+   Music music;
    SpriteBatch batch;
    OrthographicCamera camera;
    Rectangle bucket;
@@ -35,12 +36,15 @@ public class SampleGame implements ApplicationListener {
       bucketImage = new Texture(Gdx.files.internal("bucket.png"));
       
       // load the drop sound effect and the rain background "music"
-      dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-      rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+     // dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+      //rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+      music = Gdx.audio.newMusic(Gdx.files.internal("AnEndOnceAndForAll.mp3"));
       
       // start the playback of the background music immediately
-      rainMusic.setLooping(true);
-      rainMusic.play();
+      //rainMusic.setLooping(true);
+      //rainMusic.play();
+      music.setLooping(true);
+      music.play();
       
       // create the camera and the SpriteBatch
       camera = new OrthographicCamera();

@@ -3,7 +3,13 @@ package com.cal.angelgame;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class GameObject {
+public abstract class GameObject {
+	/**
+	 * Objects that will be seen on the screen as well as the background 
+	 * will derive from GameObject
+	 * 
+	 */
+	
 	public final Vector2 position;
 	public final Rectangle bounds;
 	
