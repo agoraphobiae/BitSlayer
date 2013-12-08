@@ -11,12 +11,12 @@ public class SkillTree {
 	
 	public void makeSkillTree(PlayerCharacter character){
 		if (character.characterType == "warrior"){ //even indexes are fast attributes
-			SkillTree[0] = "DoubleStrike";		   //odd indexes are tank attributes
-			SkillTree[1] = "GroundPound";
-			SkillTree[2] = "Three-Hit-Combo";
-			SkillTree[3] = "DoubleSwing";
-			SkillTree[4] = "SpeedStrUp";
-			SkillTree[5] = "DefStrUp";
+			SkillTree[0] = "SpeedStrUp";		   //odd indexes are tank attributes
+			SkillTree[1] = "DefStrUp";
+			SkillTree[2] = "DoubleStrike";
+			SkillTree[3] = "GroundPound";
+			SkillTree[4] = "Three-Hit-Combo";
+			SkillTree[5] = "DoubleSwing";
 			SkillTree[6] = "StealthHealth";
 			SkillTree[7] = "HealthRegen";
 			SkillTree[8] = "InstantKill";

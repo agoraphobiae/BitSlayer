@@ -3,8 +3,8 @@ package com.cal.angelgame.player;
 import com.cal.angelgame.enemy.Enemy;
 
 public class Speed extends Warrior {
-	static final float width = 1f; //quickfix
-    static final float height= 2f;
+	static final float width = 160f; //quickfix
+    static final float height= 160f;
 	
 	public Speed(float posx, float posy) {
 		super(posx, posy, width, height);
@@ -25,7 +25,7 @@ public class Speed extends Warrior {
 			enemy.health -= 15;
 		}
 		
-		public void StrSpeedUp(){ // passive
+		public void StrSpeedUp(Enemy enemy){ // passive
 			this.str += 10;
 			this.speed += 10;
 		}

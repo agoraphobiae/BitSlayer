@@ -3,8 +3,8 @@ package com.cal.angelgame.player;
 import com.cal.angelgame.enemy.Enemy;
 
 public class Tank extends Warrior {
-	static final float width = 1f;//quickfix
-    static final float height= 2f;
+	static final float width = 160f;//quickfix
+    static final float height= 160f;
 	
 	public Tank(float posx, float posy) {
 		super(posx, posy, width, height);
