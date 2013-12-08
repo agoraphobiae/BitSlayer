@@ -4,9 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.cal.angelgame.Level.WorldListener;
 
 
 public class GameScreen implements Screen{
@@ -23,7 +23,7 @@ public class GameScreen implements Screen{
 	OrthographicCamera guiCam;
 	Vector2 touchPoint;
 	SpriteBatch batcher;
-	World world;
+	Level world;
 	WorldListener worldListener;
 	WorldRenderer renderer;
 	
@@ -36,6 +36,36 @@ public class GameScreen implements Screen{
 		touchPoint = new Vector2();
 		batcher = new SpriteBatch();
 		
+		worldListener = new WorldListener() {
+
+			@Override
+			public void playerHits() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void enemyHits() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void playerDies() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void enemyDies() {
+				// TODO Auto-generated method stub
+				
+			}
+			// pass
+		};
+		
+		world = new Level(worldListener);
+		renderer = new WorldRenderer(batcher, world);
 	}
 
 	public void render(float num){}
@@ -52,26 +82,26 @@ public class GameScreen implements Screen{
 	
 	public void pause(){}
 	
-	public void update(float deltaTime){
-		//lag control
-		if (deltaTime > 0.1f) deltaTime = 0.1f;
-		
-		switch (currstate) {
-		case GAME_READY:
-			updateReady();
-			break;
-		case GAME_RUNNING:
-			updateRunning(deltaTime);
-			break;
-		case GAME_PAUSED:
-			updatePaused();
-			break;
-		case GAME_LEVEL_END:
-			updateLevelEnd();
-			break;
-		case GAME_OVER:
-			updateGameOver();
-			break;
-		}
-	}
+//	public void update(float deltaTime){
+//		//lag control
+//		if (deltaTime > 0.1f) deltaTime = 0.1f;
+//		
+//		switch (currstate) {
+//		case GAME_READY:
+//			updateReady();
+//			break;
+//		case GAME_RUNNING:
+//			updateRunning(deltaTime);
+//			break;
+//		case GAME_PAUSED:
+//			updatePaused();
+//			break;
+//		case GAME_LEVEL_END:
+//			updateLevelEnd();
+//			break;
+//		case GAME_OVER:
+//			updateGameOver();
+//			break;
+//		}
+//	}
 }
