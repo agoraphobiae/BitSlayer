@@ -18,6 +18,10 @@ public abstract class Enemy extends Character {
 	public int health;
 	public int healthSteal;
 	
+	public Enemy(float posx, float posy, float width, float height) {
+		super(posx, posy, width, height);
+	}
+	
 	public Enemy(float x, float y, float width, float height,
 			int str, int def, int speed, int health, int healthSteal){
 		super(x, y, width, height, str, def, speed, health, healthSteal);

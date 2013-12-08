@@ -23,6 +23,10 @@ public abstract class PlayerCharacter extends Character {
 	boolean dead = false;
 	public String characterType;
 	
+	public PlayerCharacter(float posx, float posy, float width, float height) {
+		super(posx, posy, width, height);
+	}
+	
 	public PlayerCharacter(float x, float y, float width, float height,
 			int str, int def, int speed, int health, int healthSteal, String characterType){
 		super(x, y, width, height, str, def, speed, health, healthSteal);
