@@ -37,8 +37,7 @@ public class AngelGame implements ApplicationListener {
       
       // load the drop sound effect and the rain background "music"
       dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-      rainMusic = Gdx.audio.newMusic(Gdx.files.internal("An End, Once And For All.mp3"));
-      //music = Gdx.audio.newMusic(Gdx.files.internal("An End, Once And For All.mp3"));
+      rainMusic = Gdx.audio.newMusic(Gdx.files.internal("miami.mp3"));
       
       // start the playback of the background music immediately
       rainMusic.setLooping(true);
