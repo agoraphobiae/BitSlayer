@@ -38,8 +38,6 @@ public class Battlefield {
 	public final List<Enemy> enemies;
 	public final BattlefieldEventHandler handler;
 	public final Random rand;
-	boolean playerSelected = true; // only one guy
-	// saves our butts and times
 	
 	public int curState;
 	
@@ -63,29 +61,10 @@ public class Battlefield {
 	}
 	
 	public void update(float deltaTime) {
-		updateInputs();
 		updatePlayerAndEnemies(deltaTime);
 		spawnEnemies();
 	}
-	
-	private void updateInputs() {
-		if (Gdx.input.isTouched()) {
-			if (playerSelected) {
-				playerSelected = false;
-				float x = Gdx.input.getX();
-				float y = Gdx.input.getY();
-				for (Enemy e : enemies) {
-					if (OverlapTester.pointInRectangle(e.bounds, x, y))
-					{
-						pchar.trackedEnemy = e;
-						pchar.trackingEnemy = true;
-					}
-				}
-				if (!pchar.trackingEnemy)
-					pchar.destination.set(x,y);
-			}
-		}
-	}
+
 	
 	private void updatePlayerAndEnemies(float deltaTime) {
 		int len = enemies.size();
@@ -99,6 +78,7 @@ public class Battlefield {
 			curState = BF_STATE_GAME_OVER;
 		
 		for (int i = 0; i < len; i++) {
+			System.out.println("enemy");
 			Enemy e = enemies.get(i);
 			if (e.curState == Enemy.ENEMY_STATE_DYING && 
 					e.stateTime > Enemy.ENEMY_DIE_TIME) {
