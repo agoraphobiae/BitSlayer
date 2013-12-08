@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.cal.angelgame.Battlefield.BattlefieldEventHandler;
 import com.cal.angelgame.enemy.Enemy;
+import com.cal.angelgame.skill.Skill;
 
 public class BattleScreen implements Screen {
 	/**
@@ -39,7 +40,7 @@ public class BattleScreen implements Screen {
 	
 	Rectangle pauseButtonBounds;
 	
-	public BattleScreen() {
+	public BattleScreen(Game game) {
 		this.game = game;
 		
 		curState = GAME_RUNNING;
@@ -125,8 +126,9 @@ public class BattleScreen implements Screen {
 	private void updateLevelEnd() {
 		//TODO change levelUp so that it doesn't need
 		//to take in inputs
+		//also shouldn't be null skill
 		if (Gdx.input.justTouched()) {
-			battlefield.pchar.levelUp();
+			battlefield.pchar.levelUp(new Skill());
 		}
 	}
 	

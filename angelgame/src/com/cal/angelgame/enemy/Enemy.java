@@ -1,7 +1,9 @@
 package com.cal.angelgame.enemy;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.cal.angelgame.Assets;
 import com.cal.angelgame.Character;
 import com.cal.angelgame.OverlapTester;
 
@@ -25,6 +27,9 @@ public abstract class Enemy extends Character {
 	public int speed;
 	public int health;
 	public int healthSteal;
+	
+	public static final Sound hitSound = Assets.enemyHit;
+	public static final Sound attackSound = Assets.enemyAttack;
 	
 	public Vector2 destination;
 	

@@ -53,13 +53,12 @@ public abstract class PlayerCharacter extends Character {
 		curState = PLAYER_STATE_IDLE;
 	}
 
-	public void levelUp(int str, int def, int speed, int health,
-			int healthSteal, Skill skillPicked){
-		str += 10;
-		def += 10;
-		speed += 5;
-		health += 10;
-		healthSteal += 3;
+	public void levelUp(Skill skillPicked){
+		this.str += 10;
+		this.def += 10;
+		this.speed += 5;
+		this.health += 10;
+		this.healthSteal += 3;
 		levelUpXp *= 10;
 		unlockedSkill[currLevel] = skillPicked;
 		currLevel += 1;
