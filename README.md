@@ -1,6 +1,8 @@
 angelgame
 =========
 
-AngelHack swag 2013 yolo
+A 2D 8-bit inspired cross-platform awesomeness-inducing action RPG.
 
-![alt text](/Demo.png "Logo Title Text 1")
+Written at AngelHack Sillicon Valley 2013 by Kevin Lee, Minh Nguyen, Eric Quach, Edward Whang
+
+![alt text](/Demo.png "What gameplay looks like")
