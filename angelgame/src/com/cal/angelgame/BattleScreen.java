@@ -27,6 +27,9 @@ public class BattleScreen implements Screen {
 	static final int GAME_LEVEL_END = 2;
 	static final int GAME_OVER = 3;
 	
+	boolean playerSelected = true; // only one guy
+	// saves our butts and times
+	
 	Game game;
 	
 	int curState;
@@ -93,6 +96,28 @@ public class BattleScreen implements Screen {
 		case GAME_OVER:
 			updateGameOver();
 			break;
+		}
+	}
+	
+	private void updatePlayerInputs() {
+		// attempt to move player based on input
+		if (Gdx.input.isTouched()) {
+			if (playerSelected) {
+				playerSelected = false;
+				guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+				
+				for (Enemy e : battlefield.enemies) {
+					if (OverlapTester.pointInRectangle(e.bounds, touchPoint.x, touchPoint.y))
+					{
+						battlefield.pchar.trackedEnemy = e;
+						battlefield.pchar.trackingEnemy = true;
+					}
+				}
+				if (!battlefield.pchar.trackingEnemy)
+				{
+					battlefield.pchar.destination.set(touchPoint.x, touchPoint.y);
+				}
+			}
 		}
 	}
 	
