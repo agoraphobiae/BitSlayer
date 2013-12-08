@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.cal.angelgame.enemy.Enemy;
+import com.cal.angelgame.enemy.Monster;
 import com.cal.angelgame.player.PlayerCharacter;
 import com.cal.angelgame.player.Warrior;
 
@@ -38,6 +39,8 @@ public class Battlefield {
 	
 	public int curState;
 	
+	public long lastEnemySpawn = System.currentTimeMillis();
+	
 	public Battlefield(BattlefieldEventHandler handler) {
 		this.pchar = new Warrior(2, 4.5);
 		this.enemies = new ArrayList<Enemy>();
@@ -50,6 +53,16 @@ public class Battlefield {
 	}
 	
 	private void generateLevel() {
+		Enemy spawnedEnemy = new Monster(BF_WIDTH, rand.nextFloat() * BF_HEIGHT);
+		lastEnemySpawn = System.currentTimeMillis();
+	}
+	
+	public void update(float deltaTime) {
+		updatePlayer(deltaTime);
+		updateEnemies(deltaTime);
+	}
+	
+	private void updatePlayer(float deltaTime) {
 		
 	}
 }

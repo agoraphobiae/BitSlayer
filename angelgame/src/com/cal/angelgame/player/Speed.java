@@ -3,6 +3,12 @@ package com.cal.angelgame.player;
 import com.cal.angelgame.enemy.Enemy;
 
 public class Speed extends Warrior {
+	static final float width = minhfix;
+    static final float height= minhfix;
+	
+	public Speed(float posx, float posy) {
+		super(posx, posy, width, height);
+	}
 
 	public Speed(float x, float y, int str, int def, int speed, int health,
 			int healthSteal) {

@@ -13,6 +13,10 @@ public class Monster extends Enemy {
 	
 	final static float width = 160;
 	final static float height = 160; 
+	
+	public Monster(float posx, float posy) {
+		super(posx, posy, width, height);
+	}
 
 	public Monster(float x, float y, 
 			int str, int def, int speed, int health, int healthSteal) {
