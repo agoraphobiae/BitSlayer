@@ -2,6 +2,8 @@ package com.cal.angelgame.player;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.cal.angelgame.Assets;
 import com.cal.angelgame.Character;
 import com.cal.angelgame.OverlapTester;
 import com.cal.angelgame.enemy.Enemy;
@@ -23,6 +25,9 @@ public abstract class PlayerCharacter extends Character {
 	public static final int PLAYER_STATE_ATTACKING = 2;
 	public static final int PLAYER_STATE_DYING = 3;
 	
+	public static float PLAYER_WIDTH = 0f;
+	public static float PLAYER_HEIGHT = 0f;
+	
 	public static final float PLAYER_ATTACK_TIME = 0.2f;
 	public static final float PLAYER_DIE_TIME = 1.0f;
 	
@@ -40,7 +45,7 @@ public abstract class PlayerCharacter extends Character {
 	public String characterType;
 	
 	public PlayerCharacter(float posx, float posy, float width, float height) {
-		super(posx, posy, width, height);
+		super(posx, posy, PLAYER_WIDTH, PLAYER_HEIGHT);
 		destination = new Vector2(posx, posy);
 		curState = PLAYER_STATE_IDLE;
 	}
@@ -70,17 +75,27 @@ public abstract class PlayerCharacter extends Character {
 		// should this go here? why not.
 		if (trackingEnemy)
 			destination.set(trackedEnemy.position);
-		if (!OverlapTester.pointInRectangle(this.bounds, this.destination)) {
+		if (!OverlapTester.pointInRectangle(this.bounds, this.destination)) { // this check is not working
 			System.out.println("not in destination");
-			float theta = MathUtils.atan2(this.destination.x - this.position.x, this.destination.y - this.position.y);
-			position.add(MathUtils.cos(theta) * speed * deltaTime, MathUtils.sin(theta) * speed/2 * deltaTime); // y moves slower
-			bounds.x = position.x - bounds.width / 2;
-			bounds.y = position.y - bounds.height / 2;
+//			float theta = MathUtils.atan2(this.destination.x - this.position.x, this.destination.y - this.position.y);
+//			position.add(MathUtils.cos(theta) * speed * deltaTime, MathUtils.sin(theta) * speed/2 * deltaTime); // y moves slower
+			// fuckin dumb cuz trig is hard
+			if (position.x < destination.x)
+				position.x += speed * deltaTime;
+			if (position.y < destination.y)
+				position.y += speed * deltaTime;
+			if (position.x > destination.x)
+				position.x -= speed * deltaTime;
+			if (position.y > destination.y)
+				position.y -= speed * deltaTime;
 			curState = PLAYER_STATE_MOVING;
 		} else {
 			System.out.println("else");
 			curState = PLAYER_STATE_IDLE;
 		}
+		System.out.println("POS " + position + " BOUND " + bounds + " DEST " + destination);
+		bounds.x = position.x - bounds.width / 2;
+		bounds.y = position.y - bounds.height / 2;
 		stateTime += deltaTime;
 	}
 	
