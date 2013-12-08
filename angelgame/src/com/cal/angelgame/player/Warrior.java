@@ -24,6 +24,10 @@ public class Warrior extends PlayerCharacter {
     public Warrior(float posx, float posy) {
 		super(posx, posy, width, height);
 	}
+    
+    public Warrior(float x, float y, float width, float height) {
+    	super(x, y, width, height);
+    }
 
 	public Warrior(float x, float y,
 			int str, int def, int speed, int health, int healthSteal){
