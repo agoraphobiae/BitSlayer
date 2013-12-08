@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.cal.angelgame.enemy.Enemy;
 import com.cal.angelgame.player.PlayerCharacter;
 
@@ -33,7 +34,7 @@ public class BattlefieldRenderer {
 	public void renderBackground() {
 		batch.disableBlending();
 		batch.begin();
-		batch.draw(Assets.backgroundRegion, cam.position.x-FRUSTUM_WIDTH/2, cam.position.y-FRUSTUM_HEIGHT/2, 
+		batch.draw(Assets.background, cam.position.x-FRUSTUM_WIDTH/2, cam.position.y-FRUSTUM_HEIGHT/2, 
 				FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.end();
 	}
@@ -82,6 +83,10 @@ public class BattlefieldRenderer {
 			batch.draw(keyFrame, battlefield.pchar.position.x, battlefield.pchar.position.y,
 					battlefield.pchar.width * -1, battlefield.pchar.height);
 		}
+		
+		Vector3 pos = new Vector3(battlefield.pchar.position.x, battlefield.pchar.position.y, 0);
+		cam.unproject(pos);
+		System.out.println(pos);
 	}
 	
 	private void renderEnemies() {

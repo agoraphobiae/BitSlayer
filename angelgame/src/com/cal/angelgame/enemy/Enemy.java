@@ -31,7 +31,7 @@ public abstract class Enemy extends Character {
 	public static final Sound hitSound = Assets.monsterHit;
 	public static final Sound attackSound = Assets.monsterAttack;
 	
-	public Vector2 destination;
+	public Vector2 destination = new Vector2();
 	
 	public Enemy(float posx, float posy, float width, float height) {
 		super(posx, posy, width, height);

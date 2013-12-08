@@ -44,7 +44,7 @@ public class MainMenuScreen implements Screen {
 		 * MainMenu main loop, called with deltaTime being the time
 		 * in seconds since the last call of update()
 		 */
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			// convert from projected camera coords to screen coords
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			
@@ -68,20 +68,20 @@ public class MainMenuScreen implements Screen {
 	
 	public void draw (float deltaTime) {
 		GLCommon gl = Gdx.gl;
-		gl.glClearColor(1,  0, 0, 1);
+		gl.glClearColor(0,  0, 0, 0);
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		guiCam.update();
 		batcher.setProjectionMatrix(guiCam.combined);
 		
 		batcher.disableBlending();
 		batcher.begin();
-		batcher.draw(Assets.backgroundRegion, 0, 0, AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
+		batcher.draw(Assets.background, 0, AngelGame.SCREEN_HEIGHT/2, AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
 		batcher.end();
 		
 		batcher.enableBlending();
 		batcher.begin();
-		batcher.draw(Assets.logo, AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
-		batcher.draw(Assets.start, AngelGame.SCREEN_WIDTH / 2, AngelGame.SCREEN_HEIGHT);
+		batcher.draw(Assets.logo, (AngelGame.SCREEN_WIDTH - Assets.logo.getWidth())/ 2.0f, AngelGame.SCREEN_HEIGHT / 2.0f + Assets.logo.getHeight() - 100);
+		batcher.draw(Assets.start, (AngelGame.SCREEN_WIDTH - Assets.start.getWidth())/ 2, AngelGame.SCREEN_HEIGHT / 2);
 		// we removed the mute button functionality
 		// batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
 		batcher.end();

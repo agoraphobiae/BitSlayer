@@ -73,7 +73,7 @@ public class BattleScreen implements Screen {
 		battlefield = new Battlefield(handler);
 		renderer = new BattlefieldRenderer(batcher, battlefield);
 		pauseButtonBounds = new Rectangle(AngelGame.SCREEN_WIDTH - 100, AngelGame.SCREEN_HEIGHT - 100,
-				64, 64);
+				100, 100);
 	}
 	
 	public void update(float deltaTime) {
@@ -103,6 +103,7 @@ public class BattleScreen implements Screen {
 			{
 				Assets.playSound(Assets.tapSound);
 				curState = GAME_PAUSED;
+				Assets.bgMusic.pause();
 				return;
 			}
 		}
@@ -118,6 +119,7 @@ public class BattleScreen implements Screen {
 		if (Gdx.input.justTouched()) {
 			//guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 			Assets.playSound(Assets.tapSound);
+			Assets.bgMusic.play();
 			curState = GAME_RUNNING;
 			return;
 		}
@@ -171,7 +173,7 @@ public class BattleScreen implements Screen {
 	}
 	
 	private void presentPaused() {
-		batcher.draw(Assets.pauseLogo, AngelGame.SCREEN_WIDTH/2, AngelGame.SCREEN_HEIGHT/2, 64, 64);
+		batcher.draw(Assets.pauseLogo, (AngelGame.SCREEN_WIDTH - Assets.pauseLogo.getWidth())/2, AngelGame.SCREEN_HEIGHT/2);
 	}
 	
 	private void presentLevelEnd() {

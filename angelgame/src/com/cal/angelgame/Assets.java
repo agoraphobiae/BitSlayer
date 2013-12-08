@@ -114,8 +114,8 @@ public class Assets {
 		upSpeed = loadTexture("Sprites/UpSpeed.png");
 		upStr = loadTexture("Sprites/UpStr.png");
 		
-		backgroundRegion = new TextureRegion(background, 0, 0,
-				AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
+//		backgroundRegion = new TextureRegion(background, 0, AngelGame.SCREEN_HEIGHT/2,
+//				AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
 		
 		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/BackGround.mp3"));
 		bgMusic.setLooping(true);
