@@ -1,11 +1,13 @@
 package com.cal.angelgame.player;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.MathUtils;
 import com.cal.angelgame.Character;
+import com.cal.angelgame.OverlapTester;
 import com.cal.angelgame.skill.Skill;
 import com.cal.angelgame.skill.SkillTree;
 
 public abstract class PlayerCharacter extends Character {
-	
 	/**
 	 * Player controlled character
 	 * 
@@ -14,6 +16,17 @@ public abstract class PlayerCharacter extends Character {
 	 * @param width
 	 * @param height
 	 */
+	// animation states, also for logic
+	public static final int PLAYER_STATE_IDLE = 0;
+	public static final int PLAYER_STATE_MOVING = 1;
+	public static final int PLAYER_STATE_ATTACKING = 2;
+	public static final int PLAYER_STATE_DYING = 3;
+	
+	public static final float PLAYER_ATTACK_TIME = 0.2f;
+	public static final float PLAYER_DIE_TIME = 1.0f;
+	
+	public Vector2 destination;
+	
 	int currLevel = 0;
 	int xp = 0;
 	int levelUpXp = 100;
@@ -25,13 +38,16 @@ public abstract class PlayerCharacter extends Character {
 	
 	public PlayerCharacter(float posx, float posy, float width, float height) {
 		super(posx, posy, width, height);
+		destination = new Vector2(posx, posy);
+		curState = PLAYER_STATE_IDLE;
 	}
 	
 	public PlayerCharacter(float x, float y, float width, float height,
 			int str, int def, int speed, int health, int healthSteal, String characterType){
 		super(x, y, width, height, str, def, speed, health, healthSteal);
-		// TODO Auto-generated constructor stub
 		this.characterType = characterType;
+		destination = new Vector2(x, y);
+		curState = PLAYER_STATE_IDLE;
 	}
 
 	public void levelUp(int str, int def, int speed, int health,
@@ -44,6 +60,20 @@ public abstract class PlayerCharacter extends Character {
 		levelUpXp *= 10;
 		unlockedSkill[currLevel] = skillPicked;
 		currLevel += 1;
+	}
+	
+	// Game logic
+	public void update(float deltaTime) {
+		if (!OverlapTester.pointInRectangle(this.bounds, this.destination)) {
+			float theta = MathUtils.atan2(this.destination.x - this.position.x, this.destination.y - this.position.y);
+			position.add(MathUtils.cos(theta) * speed * deltaTime, MathUtils.sin(theta) * speed/2 * deltaTime); // y moves slower
+			bounds.x = position.x - bounds.width / 2;
+			bounds.y = position.y - bounds.height / 2;
+			curState = PLAYER_STATE_MOVING;
+		} else {
+			curState = PLAYER_STATE_IDLE;
+		}
+		stateTime += deltaTime;
 	}
 	
 }

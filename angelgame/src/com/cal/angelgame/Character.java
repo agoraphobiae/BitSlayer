@@ -11,11 +11,21 @@ public abstract class Character extends GameObject {
 	 * @param width
 	 * @param height
 	 */
-	int str = 50;
-	int def = 50;
-	int speed = 50;
-	int health = 100;
-	int healthSteal = 5;
+	public int curState;
+	// how long we've been in the current state
+	public float stateTime;
+	
+	public int basestr = 50;
+	public int basedef = 50;
+	public int basespeed = 50;
+	public int basehealth = 100;
+	public int basehealthSteal = 5;
+	
+	public int str = 50;
+	public int def = 50;
+	public int speed = 50;
+	public int health = 100;
+	public float healthSteal = 0.0f;
 	
 	public Character(float posx, float posy, float width, float height) {
 		super(posx, posy, width, height);

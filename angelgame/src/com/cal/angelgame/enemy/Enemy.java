@@ -1,6 +1,9 @@
 package com.cal.angelgame.enemy;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.cal.angelgame.Character;
+import com.cal.angelgame.OverlapTester;
 
 public abstract class Enemy extends Character {
 	/**
@@ -11,6 +14,11 @@ public abstract class Enemy extends Character {
 	 * @param width
 	 * @param height
 	 */
+	public static final int ENEMY_STATE_DYING = 0;
+	public static final int ENEMY_STATE_MOVING = 1;
+	public static final int ENEMY_STATE_ATTACKING = 2;
+	public static final float ENEMY_ATTACK_TIME = 0.2f;
+	public static final float ENEMY_DIE_TIME = 0.5f;
 
 	public int str;
 	public int def;
@@ -18,8 +26,12 @@ public abstract class Enemy extends Character {
 	public int health;
 	public int healthSteal;
 	
+	public Vector2 destination;
+	
 	public Enemy(float posx, float posy, float width, float height) {
 		super(posx, posy, width, height);
+		destination.x = posx;
+		destination.y = posy;
 	}
 	
 	public Enemy(float x, float y, float width, float height,
@@ -31,5 +43,18 @@ public abstract class Enemy extends Character {
 		this.speed = speed;
 		this.health = health;
 		this.healthSteal = healthSteal;
+		destination.x = x;
+		destination.y = y;
+	}
+	
+	public void update(float deltaTime) {
+		if (!OverlapTester.pointInRectangle(this.bounds, this.destination)) {
+			float theta = MathUtils.atan2(this.destination.x - this.position.x, this.destination.y - this.position.y);
+			position.add(MathUtils.cos(theta) * speed * deltaTime, MathUtils.sin(theta) * speed/2 * deltaTime); // y moves slower
+			bounds.x = position.x - bounds.width / 2;
+			bounds.y = position.y - bounds.height / 2;
+			curState = ENEMY_STATE_MOVING;
+		}
+		stateTime += deltaTime;
 	}
 }

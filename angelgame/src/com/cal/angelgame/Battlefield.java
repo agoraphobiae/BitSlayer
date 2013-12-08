@@ -31,6 +31,7 @@ public class Battlefield {
 	public static final int BF_STATE_RUNNING = 0;
 	public static final int BF_STATE_NEXT_LEVEL = 1;
 	public static final int BF_STATE_GAME_OVER = 2;
+	public static final int BF_MAX_ENEMIES = 20;
 	
 	public final PlayerCharacter pchar;
 	public final List<Enemy> enemies;
@@ -39,10 +40,11 @@ public class Battlefield {
 	
 	public int curState;
 	
-	public long lastEnemySpawn = System.currentTimeMillis();
+	public long lastEnemySpawn = System.nanoTime();
+	public int spawnedEnemies = 0;
 	
 	public Battlefield(BattlefieldEventHandler handler) {
-		this.pchar = new Warrior(2, 4.5);
+		this.pchar = new Warrior(2f, 4.5f);
 		this.enemies = new ArrayList<Enemy>();
 		this.handler = handler;
 		rand = new Random();
@@ -54,15 +56,84 @@ public class Battlefield {
 	
 	private void generateLevel() {
 		Enemy spawnedEnemy = new Monster(BF_WIDTH, rand.nextFloat() * BF_HEIGHT);
-		lastEnemySpawn = System.currentTimeMillis();
+		lastEnemySpawn = System.nanoTime();
 	}
 	
 	public void update(float deltaTime) {
-		updatePlayer(deltaTime);
-		updateEnemies(deltaTime);
+		updatePlayerAndEnemies(deltaTime);
+		spawnEnemies();
 	}
 	
-	private void updatePlayer(float deltaTime) {
+	private void updatePlayerAndEnemies(float deltaTime) {
+		int len = enemies.size();
+		if (len == 0 && spawnedEnemies >= BF_MAX_ENEMIES)
+			curState = BF_STATE_NEXT_LEVEL;
 		
+		// handle dying first because we dont want to die before
+		// player gets to see what kills them
+		if (pchar.curState == PlayerCharacter.PLAYER_STATE_DYING &&
+				pchar.stateTime > PlayerCharacter.PLAYER_DIE_TIME)
+			curState = BF_STATE_GAME_OVER;
+		
+		for (int i = 0; i < len; i++) {
+			Enemy e = enemies.get(i);
+			if (e.curState == Enemy.ENEMY_STATE_DYING && 
+					e.stateTime > Enemy.ENEMY_DIE_TIME) {
+				enemies.remove(e);
+				len = enemies.size();
+			}
+			if (OverlapTester.overlapRectangles(pchar.bounds, e.bounds)) {
+				// handle player attacking enemy
+				pchar.destination = pchar.position;
+				if (pchar.curState == PlayerCharacter.PLAYER_STATE_ATTACKING &&
+						pchar.stateTime > PlayerCharacter.PLAYER_ATTACK_TIME) {
+					// only deal damage after animation has played
+					e.health -= pchar.str;
+					pchar.health += pchar.healthSteal * pchar.str;
+					if (e.health <= 0) {
+						e.curState = Enemy.ENEMY_STATE_DYING;
+					}
+					if (pchar.health > pchar.basehealth) {
+						pchar.health = pchar.basehealth;
+					}
+					
+					pchar.curState = PlayerCharacter.PLAYER_STATE_IDLE;
+				}
+				pchar.curState = PlayerCharacter.PLAYER_STATE_ATTACKING;
+				
+				
+				// handle enemy attacking player
+				e.destination = e.position;
+				if (e.curState == Enemy.ENEMY_STATE_ATTACKING &&
+						e.stateTime > Enemy.ENEMY_ATTACK_TIME) {
+					pchar.health -= e.str;
+					e.health += e.healthSteal * e.str;
+					if (pchar.health <= 0) {
+						pchar.curState = PlayerCharacter.PLAYER_STATE_DYING;
+					}
+					if (e.health > e.basehealth) {
+						e.health = e.basehealth;
+					}
+				}
+				e.curState = Enemy.ENEMY_STATE_ATTACKING;
+			} else {
+				e.destination = pchar.position;
+			}
+			e.update(deltaTime);
+		}
+		pchar.update(deltaTime);
+	}
+	
+	private void spawnEnemies() {
+		// spawn a new enemy every 5 to 10 seconds
+		if (lastEnemySpawn + 5000000000f + 5000000000f*rand.nextFloat() < System.nanoTime()) {
+			Monster newEnemy = new Monster(0, BF_HEIGHT);
+			if (rand.nextFloat() < 0.5) {
+				newEnemy.position.x = BF_WIDTH;
+			}
+			newEnemy.position.y *= rand.nextFloat();
+			enemies.add(newEnemy);
+			spawnedEnemies++;
+		}
 	}
 }
