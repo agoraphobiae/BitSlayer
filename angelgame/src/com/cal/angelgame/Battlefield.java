@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.cal.angelgame.enemy.Enemy;
 import com.cal.angelgame.enemy.Monster;
 import com.cal.angelgame.player.PlayerCharacter;
@@ -37,6 +38,8 @@ public class Battlefield {
 	public final List<Enemy> enemies;
 	public final BattlefieldEventHandler handler;
 	public final Random rand;
+	boolean playerSelected = true; // only one guy
+	// saves our butts and times
 	
 	public int curState;
 	
@@ -60,8 +63,28 @@ public class Battlefield {
 	}
 	
 	public void update(float deltaTime) {
+		updateInputs();
 		updatePlayerAndEnemies(deltaTime);
 		spawnEnemies();
+	}
+	
+	private void updateInputs() {
+		if (Gdx.input.justTouched()) {
+			if (playerSelected) {
+				playerSelected = false;
+				float x = Gdx.input.getX();
+				float y = Gdx.input.getY();
+				for (Enemy e : enemies) {
+					if (OverlapTester.pointInRectangle(e.bounds, x, y))
+					{
+						pchar.trackedEnemy = e;
+						pchar.trackingEnemy = true;
+					}
+				}
+				if (!pchar.trackingEnemy)
+					pchar.destination.set(x,y);
+			}
+		}
 	}
 	
 	private void updatePlayerAndEnemies(float deltaTime) {
@@ -92,6 +115,7 @@ public class Battlefield {
 					pchar.health += pchar.healthSteal * pchar.str;
 					if (e.health <= 0) {
 						e.curState = Enemy.ENEMY_STATE_DYING;
+						pchar.trackingEnemy = false;
 					}
 					if (pchar.health > pchar.basehealth) {
 						pchar.health = pchar.basehealth;

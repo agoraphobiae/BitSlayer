@@ -1,9 +1,10 @@
 package com.cal.angelgame.player;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.cal.angelgame.Character;
 import com.cal.angelgame.OverlapTester;
+import com.cal.angelgame.enemy.Enemy;
 import com.cal.angelgame.skill.Skill;
 import com.cal.angelgame.skill.SkillTree;
 
@@ -26,6 +27,8 @@ public abstract class PlayerCharacter extends Character {
 	public static final float PLAYER_DIE_TIME = 1.0f;
 	
 	public Vector2 destination;
+	public Enemy trackedEnemy;
+	public boolean trackingEnemy = false;
 	
 	int currLevel = 0;
 	int xp = 0;
@@ -64,6 +67,9 @@ public abstract class PlayerCharacter extends Character {
 	
 	// Game logic
 	public void update(float deltaTime) {
+		// should this go here? why not.
+		if (trackingEnemy)
+			destination.set(trackedEnemy.position);
 		if (!OverlapTester.pointInRectangle(this.bounds, this.destination)) {
 			float theta = MathUtils.atan2(this.destination.x - this.position.x, this.destination.y - this.position.y);
 			position.add(MathUtils.cos(theta) * speed * deltaTime, MathUtils.sin(theta) * speed/2 * deltaTime); // y moves slower
