@@ -1,6 +1,7 @@
 package com.cal.angelgame;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cal.angelgame.enemy.Enemy;
@@ -46,20 +47,32 @@ public class BattlefieldRenderer {
 	}
 	
 	private void renderPlayer() {
-		TextureRegion keyFrame;
+		Texture keyFrame;
 		switch (battlefield.pchar.curState) {
+//		case PlayerCharacter.PLAYER_STATE_ATTACKING:
+//			keyFrame = Assets.playerStrike.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+//			break;
+//		case PlayerCharacter.PLAYER_STATE_MOVING:
+//			keyFrame = Assets.playerMove.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+//			break;
+//		case PlayerCharacter.PLAYER_STATE_DYING:
+//			keyFrame = Assets.playerDie.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+//			break;
+//		case PlayerCharacter.PLAYER_STATE_IDLE:
+//		default:
+//			keyFrame = Assets.playerIdle.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
 		case PlayerCharacter.PLAYER_STATE_ATTACKING:
-			keyFrame = Assets.playerStrike.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+			keyFrame = Assets.playerStrike;
 			break;
 		case PlayerCharacter.PLAYER_STATE_MOVING:
-			keyFrame = Assets.playerMove.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+			keyFrame = Assets.playerStrike;
 			break;
 		case PlayerCharacter.PLAYER_STATE_DYING:
-			keyFrame = Assets.playerDie.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+			keyFrame = Assets.playerDie;
 			break;
 		case PlayerCharacter.PLAYER_STATE_IDLE:
 		default:
-			keyFrame = Assets.playerIdle.getKeyFrame(battlefield.pchar.stateTime, Animation.ANIMATION_LOOPING);
+			keyFrame = Assets.playerIdle;
 		}
 		
 		if (battlefield.pchar.position.x < battlefield.pchar.destination.x) {
@@ -73,13 +86,18 @@ public class BattlefieldRenderer {
 	
 	private void renderEnemies() {
 		for (Enemy e: battlefield.enemies) {
-			TextureRegion keyFrame = Assets.enemyMove;
-			int sign = 1;
+//			TextureRegion keyFrame = Assets.enemyMove;
+			Texture keyFrame = Assets.enemyLeft;
+			int dirsign = 1;
+			int deadsign = 1;
 			if (e.curState == Enemy.ENEMY_STATE_DYING) {
-				sign = -1;
+				deadsign = -1;
+				keyFrame = Assets.enemyDeadLeft;
 			}
+			if (e.position.x < e.destination.x)
+				dirsign = -1;
 			batch.draw(keyFrame, e.position.x, e.position.y,
-					e.width, e.height * sign);
+					e.width * dirsign, e.height * deadsign);
 		}
 	}
 	

@@ -27,6 +27,7 @@ public class Assets {
 	public static Sound gameWin;
 	
 	public static Texture background;
+	public static TextureRegion backgroundRegion;
 	public static Texture logo;
 	public static Texture start;
 	public static Texture enemyDeadLeft;
@@ -85,42 +86,44 @@ public class Assets {
 		 * Including images and sound. Store into public vars defined above.
 		 */
 		// TODO: implement
-		background  = loadTexture("Sprites/1136_640_BG");
-		logo  = loadTexture("Sprites/BitSlayerLogo");
-		start  = loadTexture("Sprites/StartButton");
-		enemyDeadLeft  = loadTexture("Sprites/EnemyDeadLeft");
-		enemyLeft  = loadTexture("Sprites/EnemyLeft");
-		gameOver  = loadTexture("Sprites/GameOver");
-		monsterhealth = loadTexture("Sprites/Health100");
-		playerhealth = loadTexture("Sprites/Health100");
-		playerStrike = loadTexture("Sprites/HeroAttackRight");
-		playerDie = loadTexture("Sprites/HeroDead");
-		playerIdle = loadTexture("Sprites/HeroRight");
-		playerEndLevelRight = loadTexture("Sprites/HeroFrontRight");
-		playerGroundPoundRight = loadTexture("Sprites/HeroGroundPoundRight");
-		pauseButton = loadTexture("Sprites/PauseButton");
-		pauseLogo = loadTexture("Sprites/PauseText");
-		skillDoubleHit = loadTexture("Sprites/SkillDoubleHit");
-		skillGroundPound = loadTexture("Sprites/SkillGroundPound");
-		skillHealthRegen = loadTexture("Sprites/SkillHealthRegen");
-		skillInstantKill = loadTexture("Sprites/SkillInstantKill");
-		skillSpeed = loadTexture("Sprites/SkillSpeed");
-		skillStealthHealth = loadTexture("Sprites/SkillStealthHealth");
-		skillTank = loadTexture("Sprites/SkillTank");
-		skillThreeHitCombo = loadTexture("Sprites/SkillThreeHitCombo");
-		upDef = loadTexture("Sprites/Updef");
-		upSpeed = loadTexture("Sprites/UpSpeed");
-		upStr = loadTexture("Sprites/UpStr");
+		background  = loadTexture("Sprites/1136_640_BG.png");
+		logo  = loadTexture("Sprites/BitSlayerLogo.png");
+		start  = loadTexture("Sprites/StartButton.png");
+		enemyDeadLeft  = loadTexture("Sprites/EnemyDeadLeft.png");
+		enemyLeft  = loadTexture("Sprites/EnemyLeft.png");
+		gameOver  = loadTexture("Sprites/GameOver.png");
+		monsterhealth = loadTexture("Sprites/Health100.png");
+		playerhealth = loadTexture("Sprites/Health100.png");
+		playerStrike = loadTexture("Sprites/HeroAttackRight.png");
+		playerDie = loadTexture("Sprites/HeroDead.png");
+		playerIdle = loadTexture("Sprites/HeroRight.png");
+		playerEndLevelRight = loadTexture("Sprites/HeroFrontRight.png");
+		playerGroundPoundRight = loadTexture("Sprites/HeroGroundPoundRight.png");
+		pauseButton = loadTexture("Sprites/PauseButton.png");
+		pauseLogo = loadTexture("Sprites/PauseText.png");
+		skillDoubleHit = loadTexture("Sprites/SkillDoubleHit.png");
+		skillGroundPound = loadTexture("Sprites/SkillGroundPound.png");
+		skillHealthRegen = loadTexture("Sprites/SkillHealthRegen.png");
+		skillInstantKill = loadTexture("Sprites/SkillInstantKill.png");
+		skillSpeed = loadTexture("Sprites/SkillSpeed.png");
+		skillStealthHealth = loadTexture("Sprites/SkillStealthHealth.png");
+		skillTank = loadTexture("Sprites/SkillTank.png");
+		skillThreeHitCombo = loadTexture("Sprites/SkillThreeHitCombo.png");
+		upDef = loadTexture("Sprites/Updef.png");
+		upSpeed = loadTexture("Sprites/UpSpeed.png");
+		upStr = loadTexture("Sprites/UpStr.png");
 		
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/miami.mp3"));
+		backgroundRegion = new TextureRegion(background, 0, 0,
+				AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
+		
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/BackGround.mp3"));
 		bgMusic.setLooping(true);
 		bgMusic.setVolume(0.5f);
-		
 		if (Settings.soundEnabled) bgMusic.play();
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/BackGround.mp3"));
+		
 		winGame = Gdx.audio.newSound(Gdx.files.internal("Sounds/WinGame.wav"));
 		endGame = Gdx.audio.newSound(Gdx.files.internal("Sounds/EndGame.wav"));
-		playerAttack = Gdx.audio.newSound(Gdx.files.internal("Sounds/HeroAttack"));
+		playerAttack = Gdx.audio.newSound(Gdx.files.internal("Sounds/HeroAttack.wav"));
 		playerDies = Gdx.audio.newSound(Gdx.files.internal("Sounds/HeroDies.wav"));
 		playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/HeroHurt.wav"));
 		levelUp = Gdx.audio.newSound(Gdx.files.internal("Sounds/LevelUp.wav"));

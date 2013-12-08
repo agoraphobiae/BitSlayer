@@ -28,8 +28,8 @@ public abstract class Enemy extends Character {
 	public int health;
 	public int healthSteal;
 	
-	public static final Sound hitSound = Assets.enemyHit;
-	public static final Sound attackSound = Assets.enemyAttack;
+	public static final Sound hitSound = Assets.monsterHit;
+	public static final Sound attackSound = Assets.monsterAttack;
 	
 	public Vector2 destination;
 	

@@ -59,7 +59,7 @@ public class BattleScreen implements Screen {
 			}
 			@Override
 			public void playerDie() {
-				Assets.playSound(Assets.playerDying);
+				Assets.playSound(Assets.playerDies);
 			}
 			@Override
 			public void enemyHit(Enemy enemy) {
@@ -171,13 +171,14 @@ public class BattleScreen implements Screen {
 	}
 	
 	private void presentPaused() {
-		batcher.draw(Assets.pauseMenu, AngelGame.SCREEN_WIDTH/2, AngelGame.SCREEN_HEIGHT/2, 64, 64);
+		batcher.draw(Assets.pauseLogo, AngelGame.SCREEN_WIDTH/2, AngelGame.SCREEN_HEIGHT/2, 64, 64);
 	}
 	
 	private void presentLevelEnd() {
-		String endText = "ur mum #rekt";
-		float endWidth = Assets.font.getBounds(endText).width;
-		Assets.font.draw(batcher, endText,  AngelGame.SCREEN_WIDTH-endWidth/2, AngelGame.SCREEN_HEIGHT/2);
+//		String endText = "ur mum #rekt";
+//		float endWidth = Assets.font.getBounds(endText).width;
+//		Assets.font.draw(batcher, endText,  AngelGame.SCREEN_WIDTH-endWidth/2, AngelGame.SCREEN_HEIGHT/2);
+		// no font asset yet
 	}
 	
 	private void presentGameOver() {

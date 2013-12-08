@@ -81,11 +81,13 @@ public class MainMenuScreen implements Screen {
 		batcher.enableBlending();
 		batcher.begin();
 		batcher.draw(Assets.logo, AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
-		batcher.draw(Assets.mainMenu, AngelGame.SCREEN_WIDTH / 2, AngelGame.SCREEN_HEIGHT);
-		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
+		batcher.draw(Assets.start, AngelGame.SCREEN_WIDTH / 2, AngelGame.SCREEN_HEIGHT);
+		// we removed the mute button functionality
+		// batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
 		batcher.end();
 		
 		if (System.nanoTime() - lastTime > 2000000000) {
+			// incomplete debug lag logging
 			Gdx.app.log("BitSlayer", ", memory: " + Gdx.app.getJavaHeap() + ", " + Gdx.app.getNativeHeap());
 			
 			lastTime = System.nanoTime();
