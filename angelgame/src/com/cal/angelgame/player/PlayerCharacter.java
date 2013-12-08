@@ -66,16 +66,19 @@ public abstract class PlayerCharacter extends Character {
 	
 	// Game logic
 	public void update(float deltaTime) {
+		System.out.println("update");
 		// should this go here? why not.
 		if (trackingEnemy)
 			destination.set(trackedEnemy.position);
 		if (!OverlapTester.pointInRectangle(this.bounds, this.destination)) {
+			System.out.println("not in destination");
 			float theta = MathUtils.atan2(this.destination.x - this.position.x, this.destination.y - this.position.y);
 			position.add(MathUtils.cos(theta) * speed * deltaTime, MathUtils.sin(theta) * speed/2 * deltaTime); // y moves slower
 			bounds.x = position.x - bounds.width / 2;
 			bounds.y = position.y - bounds.height / 2;
 			curState = PLAYER_STATE_MOVING;
 		} else {
+			System.out.println("else");
 			curState = PLAYER_STATE_IDLE;
 		}
 		stateTime += deltaTime;
