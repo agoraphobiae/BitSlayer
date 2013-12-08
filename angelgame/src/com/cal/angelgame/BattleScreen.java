@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.cal.angelgame.Battlefield.BattlefieldEventHandler;
 import com.cal.angelgame.enemy.Enemy;
+import com.cal.angelgame.player.PlayerCharacter;
 import com.cal.angelgame.skill.Skill;
 
 public class BattleScreen implements Screen {
@@ -47,6 +48,7 @@ public class BattleScreen implements Screen {
 		this.game = game;
 		
 		curState = GAME_RUNNING;
+		// guiCam uses screen coords. It makes no sense to unproject guiCam..?
 		guiCam = new OrthographicCamera(AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
 		guiCam.position.set(AngelGame.SCREEN_WIDTH / 2, AngelGame.SCREEN_HEIGHT / 2, 0);
 		touchPoint = new Vector3();
