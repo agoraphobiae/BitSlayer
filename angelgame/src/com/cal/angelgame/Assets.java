@@ -21,6 +21,8 @@ public class Assets {
 	public static Sound enemyHit;
 	public static Sound skillSFX;
 	public static Sound tapSound;
+	public static Sound monsterHit;
+	public static Sound monsterAttack;
 	
 	public static Texture background;
 	public static TextureRegion backgroundRegion;
@@ -33,6 +35,7 @@ public class Assets {
 	public static TextureRegion pauseButton;
 	public static TextureRegion logo;
 	public static TextureRegion mainMenu;
+	public static TextureRegion gameOver;
 	
 	public static BitmapFont font;
 	
@@ -43,7 +46,7 @@ public class Assets {
 	public static Animation playerSkill;
 	public static Animation playerIdle;
 	
-	public static Animation enemyMove;
+	public static TextureRegion enemyMove; //should be animation but can't
 	public static Animation enemyStrike;
 	public static Animation enemyWounded;
 	public static Animation enemyDie;

@@ -12,6 +12,8 @@ public abstract class GameObject {
 	
 	public final Vector2 position;
 	public final Rectangle bounds;
+	public float width; //quickfix
+	public float height; //quickfix
 	
 	public GameObject(float x, float y, float width, float height)
 	{

@@ -1,5 +1,8 @@
 package com.cal.angelgame.enemy;
 
+import com.badlogic.gdx.audio.Sound;
+import com.cal.angelgame.Assets;
+
 public class Monster extends Enemy {
 	/**
 	 * Basic Monster enemy
@@ -13,6 +16,9 @@ public class Monster extends Enemy {
 	
 	final static float width = 160;
 	final static float height = 160; 
+	
+	public static final Sound hitSound = Assets.monsterHit;
+	public static final Sound attackSound = Assets.monsterAttack;
 	
 	public Monster(float posx, float posy) {
 		super(posx, posy, width, height);

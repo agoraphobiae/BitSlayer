@@ -3,6 +3,8 @@ package com.cal.angelgame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -95,55 +97,122 @@ public class BattleScreen implements Screen {
 	
 	public void updateRunning(float deltaTime) {
 		if (Gdx.input.justTouched()) {
-			if (OverlapTester.pointInRectangle(pauseButtonBounds, Gdx.input.getX(), Gdx.input.getY()))
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
+			if (OverlapTester.pointInRectangle(pauseButtonBounds, touchPoint.x, touchPoint.y))
 			{
 				Assets.playSound(Assets.tapSound);
 				curState = GAME_PAUSED;
 				return;
 			}
 		}
+		if (battlefield.curState == Battlefield.BF_STATE_NEXT_LEVEL) {
+			curState = GAME_LEVEL_END;
+		}
+		if (battlefield.curState == Battlefield.BF_STATE_GAME_OVER) {
+			curState = GAME_OVER;
+		}
+	}
+	
+	private void updatePaused() {
+		if (Gdx.input.justTouched()) {
+			//guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
+			Assets.playSound(Assets.tapSound);
+			curState = GAME_RUNNING;
+			return;
+		}
+	}
+	
+	private void updateLevelEnd() {
+		//TODO change levelUp so that it doesn't need
+		//to take in inputs
+		if (Gdx.input.justTouched()) {
+			battlefield.pchar.levelUp();
+		}
+	}
+	
+	private void updateGameOver() {
+		if (Gdx.input.justTouched()) {
+			game.setScreen(new MainMenuScreen(game));
+		}
+	}
+	
+	public void draw (float deltaTime) {
+		GLCommon gl = Gdx.gl;
+		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+
+		renderer.render();
+
+		guiCam.update();
+		batcher.setProjectionMatrix(guiCam.combined);
+		batcher.enableBlending();
+		batcher.begin();
+
+		switch (curState) {
+		case GAME_RUNNING:
+			presentRunning();
+			break;
+		case GAME_PAUSED:
+			presentPaused();
+			break;
+		case GAME_LEVEL_END:
+			presentLevelEnd();
+			break;
+		case GAME_OVER:
+			presentGameOver();
+			break;
+		}
+		batcher.end();
+	}
+	
+	private void presentRunning() {
+		batcher.draw(Assets.pauseButton, AngelGame.SCREEN_WIDTH-64, AngelGame.SCREEN_HEIGHT-64, 64, 64);
+	}
+	
+	private void presentPaused() {
+		batcher.draw(Assets.pauseMenu, AngelGame.SCREEN_WIDTH/2, AngelGame.SCREEN_HEIGHT/2, 64, 64);
+	}
+	
+	private void presentLevelEnd() {
+		String endText = "ur mum #rekt";
+		float endWidth = Assets.font.getBounds(endText).width;
+		Assets.font.draw(batcher, endText,  AngelGame.SCREEN_WIDTH-endWidth/2, AngelGame.SCREEN_HEIGHT/2);
+	}
+	
+	private void presentGameOver() {
+		batcher.draw(Assets.gameOver, AngelGame.SCREEN_WIDTH/2, AngelGame.SCREEN_HEIGHT/2);
 	}
 
+	
+	
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
-		
+		update(delta);
+		draw(delta);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+		if (curState == GAME_RUNNING) curState = GAME_PAUSED;
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
