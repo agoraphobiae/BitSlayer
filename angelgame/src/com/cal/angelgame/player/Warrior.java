@@ -11,8 +11,9 @@ public class Warrior extends PlayerCharacter {
 	 * @param height
 	 */
 
-	public Warrior(float x, float y, float width, float height) {
-		super(x, y, width, height);
+	public Warrior(float x, float y, float width, float height,
+			int str, int def, int speed, int health, int healthSteal){
+		super(x, y, width, height, str, def, speed, health, healthSteal);
 		// TODO Auto-generated constructor stub
 	}
 

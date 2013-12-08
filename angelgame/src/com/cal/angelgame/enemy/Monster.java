@@ -11,8 +11,9 @@ public class Monster extends Enemy {
 	 * @param height
 	 */
 
-	public Monster(float x, float y, float width, float height) {
-		super(x, y, width, height);
+	public Monster(float x, float y, float width, float height,
+			int str, int def, int speed, int health, int healthSteal) {
+		super(x, y, width, height, str, def, speed, health, healthSteal);
 		// TODO Auto-generated constructor stub
 	}
 
