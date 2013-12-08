@@ -3,4 +3,4 @@ angelgame
 
 AngelHack swag 2013 yolo
 
-![alt text](/blob/master/Demo.png "Logo Title Text 1")
+![alt text](/Demo.png "Logo Title Text 1")
