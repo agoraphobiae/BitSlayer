@@ -86,6 +86,7 @@ public class Assets {
 		 * Including images and sound. Store into public vars defined above.
 		 */
 		// TODO: implement
+		Texture.setEnforcePotImages(false);
 		background  = loadTexture("Sprites/1136_640_BG.png");
 		logo  = loadTexture("Sprites/BitSlayerLogo.png");
 		start  = loadTexture("Sprites/StartButton.png");
@@ -130,7 +131,7 @@ public class Assets {
 		monsterAttack = Gdx.audio.newSound(Gdx.files.internal("Sounds/MonsterAttack.wav"));
 		monsterDies = Gdx.audio.newSound(Gdx.files.internal("Sounds/MonsterDies.wav"));
 		monsterHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/MonsterHurt.wav"));
-		tapSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/PauseSound.wav"));
+		tapSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/TapSound.wav"));
 	
 		//need to implement animations
 		
