@@ -75,18 +75,20 @@ public class BattlefieldRenderer {
 		default:
 			keyFrame = Assets.playerIdle;
 		}
-		
+		float side = battlefield.pchar.position.x < 0 ? -1 : 1;
 		if (battlefield.pchar.position.x < battlefield.pchar.destination.x) {
-			batch.draw(keyFrame, battlefield.pchar.position.x, battlefield.pchar.position.y,
-					battlefield.pchar.width, battlefield.pchar.height);
+			batch.draw(keyFrame, battlefield.pchar.position.x + 0.5f , battlefield.pchar.position.y - 0.5f,
+					side * 1, 1);
 		} else {
-			batch.draw(keyFrame, battlefield.pchar.position.x, battlefield.pchar.position.y,
-					battlefield.pchar.width * -1, battlefield.pchar.height);
+			batch.draw(keyFrame, battlefield.pchar.position.x - .5f, battlefield.pchar.position.y,
+					side * 1, 1);
 		}
 		
 		Vector3 pos = new Vector3(battlefield.pchar.position.x, battlefield.pchar.position.y, 0);
 		cam.unproject(pos);
 		System.out.println(pos);
+		System.out.println(battlefield.pchar.width);
+		System.out.println(battlefield.pchar.height);
 	}
 	
 	private void renderEnemies() {
