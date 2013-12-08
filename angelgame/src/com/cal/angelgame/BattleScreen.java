@@ -97,7 +97,7 @@ public class BattleScreen implements Screen {
 	}
 	
 	public void updateRunning(float deltaTime) {
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 			if (OverlapTester.pointInRectangle(pauseButtonBounds, touchPoint.x, touchPoint.y))
 			{
@@ -113,10 +113,11 @@ public class BattleScreen implements Screen {
 		if (battlefield.curState == Battlefield.BF_STATE_GAME_OVER) {
 			curState = GAME_OVER;
 		}
+		battlefield.update(deltaTime);
 	}
 	
 	private void updatePaused() {
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			//guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 			Assets.playSound(Assets.tapSound);
 			Assets.bgMusic.play();
@@ -129,13 +130,13 @@ public class BattleScreen implements Screen {
 		//TODO change levelUp so that it doesn't need
 		//to take in inputs
 		//also shouldn't be null skill
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			battlefield.pchar.levelUp(new Skill());
 		}
 	}
 	
 	private void updateGameOver() {
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			game.setScreen(new MainMenuScreen(game));
 		}
 	}

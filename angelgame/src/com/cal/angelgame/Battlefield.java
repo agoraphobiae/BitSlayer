@@ -69,7 +69,7 @@ public class Battlefield {
 	}
 	
 	private void updateInputs() {
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			if (playerSelected) {
 				playerSelected = false;
 				float x = Gdx.input.getX();
