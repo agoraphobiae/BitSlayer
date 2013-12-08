@@ -13,7 +13,7 @@ public abstract class Character extends GameObject {
 	 */
 	int str = 50;
 	int def = 50;
-	int speed = 60;
+	int speed = 50;
 	int health = 100;
 	int healthSteal = 5;
 

@@ -19,12 +19,15 @@ public abstract class PlayerCharacter extends Character {
 	int levelUpXp = 100;
 	int levels = 10;
 	Skill unlockedSkill[] = new Skill[levels];
-	SkillTree skillTree;
+	SkillTree skillTree[][];
+	boolean dead = false;
+	public String characterType;
 	
 	public PlayerCharacter(float x, float y, float width, float height,
-			int str, int def, int speed, int health, int healthSteal){
+			int str, int def, int speed, int health, int healthSteal, String characterType){
 		super(x, y, width, height, str, def, speed, health, healthSteal);
 		// TODO Auto-generated constructor stub
+		this.characterType = characterType;
 	}
 
 	public void levelUp(int str, int def, int speed, int health,

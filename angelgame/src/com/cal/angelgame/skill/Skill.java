@@ -8,7 +8,6 @@ public class Skill {
 
 	public void useSkill(){
 	}
+	
+	
 }
-
-
-//strInc, defInc, speedInc, healthRegen, healthSteal
