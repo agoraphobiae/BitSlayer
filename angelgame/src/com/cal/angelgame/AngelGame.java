@@ -1,3 +1,5 @@
+package com.cal.angelgame;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.FPSLogger;
 
