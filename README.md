@@ -1,4 +1,4 @@
-angelgame
+BitSlayer
 =========
 
 A 2D 8-bit inspired cross-platform awesomeness-inducing action RPG.
