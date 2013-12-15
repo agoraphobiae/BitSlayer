@@ -14,4 +14,3 @@ public class Main {
 		new LwjglApplication(new AngelGame(), cfg);
 	}
 }
->>>>>>> hotfix_jarsplusgitignore
