@@ -5,6 +5,14 @@
 
 *.class
 
+# IntelliJ #
+.idea/
+*.iml
+*.iws
+
+# OS X #
+.DS_Store
+
 # Eclipse specific #
 *.pydevproject
 .metadata
