@@ -1,3 +1,5 @@
-[ ] add delay to clicking (pause) button
+[x] add delay to clicking (pause) button
+[ ] add delay to button inputs in general
+	to fix the "bleeding" of input from one screen to another
 [ ] update assets
 [ ] update button locations to match assets
