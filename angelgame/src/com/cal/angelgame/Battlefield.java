@@ -1,14 +1,13 @@
 package com.cal.angelgame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import com.badlogic.gdx.Gdx;
 import com.cal.angelgame.enemy.Enemy;
 import com.cal.angelgame.enemy.Monster;
 import com.cal.angelgame.player.PlayerCharacter;
 import com.cal.angelgame.player.Warrior;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Battlefield {
 	/**
@@ -38,13 +37,13 @@ public class Battlefield {
 	public final List<Enemy> enemies;
 	public final BattlefieldEventHandler handler;
 	public final Random rand;
-	boolean playerSelected = true; // only one guy
-	// saves our butts and times
 	
 	public int curState;
 	
 	public long lastEnemySpawn = System.nanoTime();
 	public int spawnedEnemies = 0;
+    public static final float spawnRate = 5.0f; // seconds to next enemy spawn
+    public static final float spawnRateMax = 10.0f;
 	
 	public Battlefield(BattlefieldEventHandler handler) {
 		this.pchar = new Warrior(2f, 4.5f);
@@ -63,29 +62,10 @@ public class Battlefield {
 	}
 	
 	public void update(float deltaTime) {
-		updateInputs();
 		updatePlayerAndEnemies(deltaTime);
 		spawnEnemies();
 	}
-	
-	private void updateInputs() {
-		if (Gdx.input.justTouched()) {
-			if (playerSelected) {
-				playerSelected = false;
-				float x = Gdx.input.getX();
-				float y = Gdx.input.getY();
-				for (Enemy e : enemies) {
-					if (OverlapTester.pointInRectangle(e.bounds, x, y))
-					{
-						pchar.trackedEnemy = e;
-						pchar.trackingEnemy = true;
-					}
-				}
-				if (!pchar.trackingEnemy)
-					pchar.destination.set(x,y);
-			}
-		}
-	}
+
 	
 	private void updatePlayerAndEnemies(float deltaTime) {
 		int len = enemies.size();
@@ -99,6 +79,7 @@ public class Battlefield {
 			curState = BF_STATE_GAME_OVER;
 		
 		for (int i = 0; i < len; i++) {
+			// System.out.println("enemy");
 			Enemy e = enemies.get(i);
 			if (e.curState == Enemy.ENEMY_STATE_DYING && 
 					e.stateTime > Enemy.ENEMY_DIE_TIME) {
@@ -150,7 +131,7 @@ public class Battlefield {
 	
 	private void spawnEnemies() {
 		// spawn a new enemy every 5 to 10 seconds
-		if (lastEnemySpawn + 5000000000f + 5000000000f*rand.nextFloat() < System.nanoTime()) {
+		if (lastEnemySpawn + spawnRate*AngelGame.NANO + spawnRateMax*AngelGame.NANO*rand.nextFloat() < System.nanoTime()) {
 			Monster newEnemy = new Monster(0, BF_HEIGHT);
 			if (rand.nextFloat() < 0.5) {
 				newEnemy.position.x = BF_WIDTH;
@@ -158,6 +139,8 @@ public class Battlefield {
 			newEnemy.position.y *= rand.nextFloat();
 			enemies.add(newEnemy);
 			spawnedEnemies++;
+
+            lastEnemySpawn = System.nanoTime();
 		}
 	}
 }

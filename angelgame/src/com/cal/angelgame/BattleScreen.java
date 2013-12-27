@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.cal.angelgame.Battlefield.BattlefieldEventHandler;
 import com.cal.angelgame.enemy.Enemy;
+import com.cal.angelgame.player.PlayerCharacter;
 import com.cal.angelgame.skill.Skill;
 
 public class BattleScreen implements Screen {
@@ -26,6 +27,13 @@ public class BattleScreen implements Screen {
 	static final int GAME_PAUSED = 1;
 	static final int GAME_LEVEL_END = 2;
 	static final int GAME_OVER = 3;
+
+    long lastPause = 0;
+    // time in seconds to disable pause button
+    public static final float PAUSE_DELAY = 0.1f;
+	
+	boolean playerSelected = true; // only one guy
+	// saves our butts and times
 	
 	Game game;
 	
@@ -44,6 +52,7 @@ public class BattleScreen implements Screen {
 		this.game = game;
 		
 		curState = GAME_RUNNING;
+		// guiCam uses screen coords. It makes no sense to unproject guiCam..?
 		guiCam = new OrthographicCamera(AngelGame.SCREEN_WIDTH, AngelGame.SCREEN_HEIGHT);
 		guiCam.position.set(AngelGame.SCREEN_WIDTH / 2, AngelGame.SCREEN_HEIGHT / 2, 0);
 		touchPoint = new Vector3();
@@ -96,14 +105,47 @@ public class BattleScreen implements Screen {
 		}
 	}
 	
+	private void updatePlayerInputs() {
+		// attempt to move player based on input
+		if (Gdx.input.isTouched()) {
+            guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+            System.out.println("TOUCHEDX: " + touchPoint.x + " TOUCHEDY: " + touchPoint.y);
+			if (playerSelected) {
+				playerSelected = false;
+				
+				for (Enemy e : battlefield.enemies) {
+					if (OverlapTester.pointInRectangle(e.bounds, touchPoint.x, touchPoint.y))
+					{
+						battlefield.pchar.trackedEnemy = e;
+						battlefield.pchar.trackingEnemy = true;
+					}
+				}
+				if (!battlefield.pchar.trackingEnemy)
+				{
+                    // something about these points is projecting wrong.
+					battlefield.pchar.destination.set(touchPoint.x, touchPoint.y);
+				}
+			} else {
+                if (OverlapTester.pointInRectangle(battlefield.pchar.bounds, touchPoint.x, touchPoint.y))
+                {
+                    playerSelected = true;
+                }
+            }
+		}
+	}
+	
 	public void updateRunning(float deltaTime) {
-		if (Gdx.input.justTouched()) {
+        updatePlayerInputs();
+		if (Gdx.input.isTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
-			if (OverlapTester.pointInRectangle(pauseButtonBounds, touchPoint.x, touchPoint.y))
+			if (lastPause + PAUSE_DELAY*AngelGame.NANO < System.nanoTime() &&
+                    OverlapTester.pointInRectangle(pauseButtonBounds, touchPoint.x, touchPoint.y))
 			{
 				Assets.playSound(Assets.tapSound);
 				curState = GAME_PAUSED;
 				Assets.bgMusic.pause();
+
+                lastPause = System.nanoTime();
 				return;
 			}
 		}
@@ -113,14 +155,17 @@ public class BattleScreen implements Screen {
 		if (battlefield.curState == Battlefield.BF_STATE_GAME_OVER) {
 			curState = GAME_OVER;
 		}
+		battlefield.update(deltaTime);
 	}
 	
 	private void updatePaused() {
-		if (Gdx.input.justTouched()) {
+		if (lastPause + PAUSE_DELAY*AngelGame.NANO < System.nanoTime() &&
+                Gdx.input.isTouched()) {
 			//guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 			Assets.playSound(Assets.tapSound);
 			Assets.bgMusic.play();
 			curState = GAME_RUNNING;
+            lastPause = System.nanoTime();
 			return;
 		}
 	}
@@ -129,13 +174,13 @@ public class BattleScreen implements Screen {
 		//TODO change levelUp so that it doesn't need
 		//to take in inputs
 		//also shouldn't be null skill
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			battlefield.pchar.levelUp(new Skill());
 		}
 	}
 	
 	private void updateGameOver() {
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.isTouched()) {
 			game.setScreen(new MainMenuScreen(game));
 		}
 	}

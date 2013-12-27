@@ -13,7 +13,9 @@ public class Monster extends Enemy {
 	 * @param width
 	 * @param height
 	 */
-	
+
+    // these are used in the Renderer, which means they shouldn't be pixels
+    // Fix later.
 	final static float width = 160;
 	final static float height = 160; 
 	

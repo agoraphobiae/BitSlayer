@@ -31,7 +31,7 @@ public class Assets {
 	public static Texture logo;
 	public static Texture start;
 	public static Texture enemyDeadLeft;
-	public static Texture enemyLeft; 
+	public static Texture enemyLeft;
 	public static Texture gameOver;
 
 	public static Texture monsterhealth;
@@ -85,7 +85,7 @@ public class Assets {
 		 * Load internal assets from assets/ folder
 		 * Including images and sound. Store into public vars defined above.
 		 */
-		// TODO: implement
+        // TODO: Animations
 		Texture.setEnforcePotImages(false);
 		background  = loadTexture("Sprites/1136_640_BG.png");
 		logo  = loadTexture("Sprites/BitSlayerLogo.png");
