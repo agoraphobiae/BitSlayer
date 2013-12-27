@@ -122,6 +122,7 @@ public class BattleScreen implements Screen {
 				}
 				if (!battlefield.pchar.trackingEnemy)
 				{
+                    // something about these points is projecting wrong.
 					battlefield.pchar.destination.set(touchPoint.x, touchPoint.y);
 				}
 			} else {

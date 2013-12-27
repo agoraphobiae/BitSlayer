@@ -13,6 +13,12 @@
 # OS X #
 .DS_Store
 
+# Android #
+*.apk
+*.ap_
+gen/
+*.dex
+
 # Eclipse specific #
 *.pydevproject
 .metadata
