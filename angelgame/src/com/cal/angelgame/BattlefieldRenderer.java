@@ -118,7 +118,7 @@ public class BattlefieldRenderer {
 			if (e.position.x < e.destination.x)
 				dirsign = -1;
 			batch.draw(keyFrame, e.position.x, e.position.y,
-					e.width * dirsign, e.height * deadsign);
+					dirsign * 1, deadsign * 1);
 		}
 	}
 	
