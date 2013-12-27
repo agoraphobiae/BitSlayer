@@ -108,9 +108,10 @@ public class BattleScreen implements Screen {
 	private void updatePlayerInputs() {
 		// attempt to move player based on input
 		if (Gdx.input.isTouched()) {
+            guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+            System.out.println("TOUCHEDX: " + touchPoint.x + " TOUCHEDY: " + touchPoint.y);
 			if (playerSelected) {
 				playerSelected = false;
-				guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 				
 				for (Enemy e : battlefield.enemies) {
 					if (OverlapTester.pointInRectangle(e.bounds, touchPoint.x, touchPoint.y))
@@ -123,11 +124,17 @@ public class BattleScreen implements Screen {
 				{
 					battlefield.pchar.destination.set(touchPoint.x, touchPoint.y);
 				}
-			}
+			} else {
+                if (OverlapTester.pointInRectangle(battlefield.pchar.bounds, touchPoint.x, touchPoint.y))
+                {
+                    playerSelected = true;
+                }
+            }
 		}
 	}
 	
 	public void updateRunning(float deltaTime) {
+        updatePlayerInputs();
 		if (Gdx.input.isTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 			if (lastPause + PAUSE_DELAY*AngelGame.NANO < System.nanoTime() &&

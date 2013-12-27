@@ -79,7 +79,7 @@ public class Battlefield {
 			curState = BF_STATE_GAME_OVER;
 		
 		for (int i = 0; i < len; i++) {
-			System.out.println("enemy");
+			// System.out.println("enemy");
 			Enemy e = enemies.get(i);
 			if (e.curState == Enemy.ENEMY_STATE_DYING && 
 					e.stateTime > Enemy.ENEMY_DIE_TIME) {
