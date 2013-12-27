@@ -12,6 +12,8 @@ public class AngelGame extends Game {
 	// 16:9. we'll think about different platforms later.
 	public static final int SCREEN_WIDTH = 1024;
 	public static final int SCREEN_HEIGHT = 576;
+
+    public static final float NANO = 1000000000f;
 	
 	boolean firstTimeCreate = true;
 	FPSLogger fps;

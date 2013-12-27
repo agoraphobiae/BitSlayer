@@ -27,6 +27,10 @@ public class BattleScreen implements Screen {
 	static final int GAME_PAUSED = 1;
 	static final int GAME_LEVEL_END = 2;
 	static final int GAME_OVER = 3;
+
+    long lastPause = 0;
+    // time in seconds to disable pause button
+    public static final float PAUSE_DELAY = 0.1f;
 	
 	boolean playerSelected = true; // only one guy
 	// saves our butts and times
@@ -126,11 +130,14 @@ public class BattleScreen implements Screen {
 	public void updateRunning(float deltaTime) {
 		if (Gdx.input.isTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
-			if (OverlapTester.pointInRectangle(pauseButtonBounds, touchPoint.x, touchPoint.y))
+			if (lastPause + PAUSE_DELAY*AngelGame.NANO < System.nanoTime() &&
+                    OverlapTester.pointInRectangle(pauseButtonBounds, touchPoint.x, touchPoint.y))
 			{
 				Assets.playSound(Assets.tapSound);
 				curState = GAME_PAUSED;
 				Assets.bgMusic.pause();
+
+                lastPause = System.nanoTime();
 				return;
 			}
 		}
@@ -144,11 +151,13 @@ public class BattleScreen implements Screen {
 	}
 	
 	private void updatePaused() {
-		if (Gdx.input.isTouched()) {
+		if (lastPause + PAUSE_DELAY*AngelGame.NANO < System.nanoTime() &&
+                Gdx.input.isTouched()) {
 			//guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 			Assets.playSound(Assets.tapSound);
 			Assets.bgMusic.play();
 			curState = GAME_RUNNING;
+            lastPause = System.nanoTime();
 			return;
 		}
 	}

@@ -1,14 +1,13 @@
 package com.cal.angelgame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import com.badlogic.gdx.Gdx;
 import com.cal.angelgame.enemy.Enemy;
 import com.cal.angelgame.enemy.Monster;
 import com.cal.angelgame.player.PlayerCharacter;
 import com.cal.angelgame.player.Warrior;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Battlefield {
 	/**
@@ -132,7 +131,7 @@ public class Battlefield {
 	
 	private void spawnEnemies() {
 		// spawn a new enemy every 5 to 10 seconds
-		if (lastEnemySpawn + spawnRate*1000000000f + spawnRateMax*1000000000f*rand.nextFloat() < System.nanoTime()) {
+		if (lastEnemySpawn + spawnRate*AngelGame.NANO + spawnRateMax*AngelGame.NANO*rand.nextFloat() < System.nanoTime()) {
 			Monster newEnemy = new Monster(0, BF_HEIGHT);
 			if (rand.nextFloat() < 0.5) {
 				newEnemy.position.x = BF_WIDTH;
